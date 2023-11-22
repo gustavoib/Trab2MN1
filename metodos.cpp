@@ -1,16 +1,18 @@
 #include "metodos.h"
 #include "auxiliares.h"
+#include <vector>
+using namespace std;
 
-void eliminacaoDeGauss(int n, double **matriz, double *b, double *vetorResposta){
-    for(int k = 1; k < n; k++){
+vector<double> eliminacaoDeGauss(int n, double matriz[][3], double *b){
+    for(int k = 0; k < n; k++){
         for(int i = k+1; i <= n; i++){
-            double m = matriz[i][k] / matriz[k][k];
+            double m = -matriz[i][k] / matriz[k][k];
             matriz[i][k] = 0;
             for(int j = k+1; j <= n; j++){
-                matriz[i][j] = matriz[i][j] - m * matriz[k][j];
+                matriz[i][j] = matriz[i][j] + m * matriz[k][j];
             }
-            b[i] = b[i] - m * b[k];
+            b[i] = b[i] + m * b[k];
         }
     }
-    substituicoesRetroativas(matriz, b, vetorResposta, n);
+    return substituicoesRetroativas(matriz, b, n);
 }
