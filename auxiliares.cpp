@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 #include "auxiliares.h"
 
 using namespace std;
@@ -18,6 +19,15 @@ vector<double> substituicoesRetroativas(double matriz[][3], double *b, int n) {
     return vetorResposta;
 }
 
+void printaMatriz(double matriz[][3]) {
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            cout << "|" << matriz[i][j] << "|";
+        }
+        cout << "\n --------------------------- \n";
+    }
+}
+
 void geradorDeLU(int n, double matriz[][3], double matrizL[][3]){
     for(int k = 0; k < n; k++){
         for(int i = k+1; i < n; i++){
@@ -28,6 +38,11 @@ void geradorDeLU(int n, double matriz[][3], double matrizL[][3]){
             }
             matrizL[i][k] = -m;
         }
+        cout << "matriz U: \n";
+        printaMatriz(matriz);
+
+        cout << "matriz L: \n";
+        printaMatriz(matrizL);
     }
 
 }

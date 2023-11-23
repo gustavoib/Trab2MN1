@@ -8,4 +8,6 @@ using namespace std;
 vector<double> substituicoesRetroativas(double matriz[][3], double *b, int n);
 
 void geradorDeLU(int n, double matriz[][3], double matrizL[][3]);
+
+void printaMatriz(double matriz[][3]);
 #endif //TRAB2MN1_AUXILIARES_H
