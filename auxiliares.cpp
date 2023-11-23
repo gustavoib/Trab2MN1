@@ -28,18 +28,18 @@ void printaMatriz(double matriz[][3]) {
     }
 }
 
-void geradorDeLU(int n, double matriz[][3], double matrizL[][3]){
+void geradorDeLU(int n, double matrizU[][3], double matrizL[][3]){
     for(int k = 0; k < n; k++){
         for(int i = k+1; i < n; i++){
-            double m = -matriz[i][k] / matriz[k][k];
-            matriz[i][k] = 0;
+            double m = -matrizU[i][k] / matrizU[k][k];
+            matrizU[i][k] = 0;
             for(int j = k+1; j <= n; j++){
-                matriz[i][j] = matriz[i][j] + m * matriz[k][j];
+                matrizU[i][j] = matrizU[i][j] + m * matrizU[k][j];
             }
             matrizL[i][k] = -m;
         }
         cout << "matriz U: \n";
-        printaMatriz(matriz);
+        printaMatriz(matrizU);
 
         cout << "matriz L: \n";
         printaMatriz(matrizL);

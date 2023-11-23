@@ -5,6 +5,7 @@
 using namespace std;
 
 int main() {
+    //menu();
     double matriz[3][3] = {{3, -2, 1},
         {1, -3, 4},
         {9,4,-5}};
@@ -29,3 +30,28 @@ int main() {
 
     return 0;
 }
+
+void menu() {
+
+    cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+    cout << "               | 3  -2  1 |           | 8 |\n";
+    cout << "         [A] = | 1  -3  4 |     {f} = | 6 |\n";
+    cout << "               | 9   4 -5 |           | 11|\n\n";
+    cout << "Escolha qual item você deseja executar:" << endl << endl
+         << "[a] Obter valores do deslocamento d através da Fatoração LU" << endl
+         << "[b] Obter valores do deslocamento d através da Fatoração LDP" << endl
+         << "[c] Gerar quadro resposta para cada método, variando os valores de [A] e de {f}" << endl;
+    cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+
+    char item;
+    cin >> item;
+    /*
+    if (item == 'a') {
+      fatoracaoLU();
+    } else if (item == 'b') {
+      fatoracaoLDP();
+    } else if (item == 'c') {
+      ;
+    }*/
+  }
+
