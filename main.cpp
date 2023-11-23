@@ -1,6 +1,7 @@
 #include "auxiliares.h"
 #include "metodos.h"
 #include <vector>
+#include <iostream>
 using namespace std;
 
 int main() {
@@ -16,9 +17,15 @@ int main() {
     };
 
     int n = 3;
+    vector<double> y(n);
     vector<double> x(n);
-
-//    x = eliminacaoDeGauss(n, matriz, b);
     geradorDeLU(n, matriz, matrizL);
+
+    y = eliminacaoDeGauss(n, matrizL, b);
+    x = eliminacaoDeGauss(n, matriz, y.data());
+    for(int i = 0; i < n; i++){
+        cout << x[i] << "\n";
+    }
+
     return 0;
 }
