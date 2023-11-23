@@ -20,7 +20,7 @@ vector<double> substituicoesRetroativas(double matriz[][3], double *b, int n) {
 
 void geradorDeLU(int n, double matriz[][3], double matrizL[][3]){
     for(int k = 0; k < n; k++){
-        for(int i = k+1; i <= n; i++){
+        for(int i = k+1; i < n; i++){
             double m = -matriz[i][k] / matriz[k][k];
             matriz[i][k] = 0;
             for(int j = k+1; j <= n; j++){

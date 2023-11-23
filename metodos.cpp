@@ -5,7 +5,7 @@ using namespace std;
 
 vector<double> eliminacaoDeGauss(int n, double matriz[][3], double *b){
     for(int k = 0; k < n; k++){
-        for(int i = k+1; i <= n; i++){
+        for(int i = k+1; i < n; i++){
             double m = -matriz[i][k] / matriz[k][k];
             matriz[i][k] = 0;
             for(int j = k+1; j <= n; j++){
