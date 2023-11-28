@@ -3,82 +3,110 @@
 #include <vector>
 #include <iostream>
 
+
 using namespace std;
+
 
 // Função para realizar a fatoração LU
 vector<double> fatoracaoLU(const vector<vector<double>>& matrizA, vector<vector<double>>& matrizL, vector<vector<double>>& matrizU, vector<double> vetorB) {
-    int n = matrizA.size();
+   int n = matrizA.size();
 
-    // Inicializar matrizL como uma matriz identidade e matrizU como uma cópia de matrizA
-    matrizL = vector<vector<double>>(n, vector<double>(n, 0.0));
-    matrizU = matrizA;
 
-    for (int i = 0; i < n; i++) {
-        matrizL[i][i] = 1.0; // Elementos diagonais de L são 1
-        for (int j = i + 1; j < n; j++) {
-            double multiplicador = matrizU[j][i] / matrizU[i][i];
-            matrizL[j][i] = multiplicador;
-            for (int k = i; k < n; k++) {
-                matrizU[j][k] -= multiplicador * matrizU[i][k];
-            }
-        }
-    }
-    vector<double> y = resolverSistema(matrizL, vetorB);
-    vector<double> x = resolverSistema(matrizU, y);
+   // Inicializar matrizL como uma matriz identidade e matrizU como uma cópia de matrizA
+   matrizL = vector<vector<double>>(n, vector<double>(n, 0.0));
+   matrizU = matrizA;
 
-    return x;
+
+   for (int i = 0; i < n; i++) {
+       matrizL[i][i] = 1.0; // Elementos diagonais de L são 1
+       for (int j = i + 1; j < n; j++) {
+           double multiplicador = matrizU[j][i] / matrizU[i][i];
+           matrizL[j][i] = multiplicador;
+           for (int k = i; k < n; k++) {
+               matrizU[j][k] -= multiplicador * matrizU[i][k];
+           }
+       }
+   }
+   vector<double> y = resolverSistema(matrizL, vetorB);
+   vector<double> x = resolverSistema(matrizU, y);
+
+
+   return x;
 }
+
 
 // Função para realizar a fatoração LU
 vector<vector<double>> gerarL(vector<vector<double>> &matrizA, vector<vector<double>> &matrizL, vector<vector<double>> &matrizU, vector<double> vetorB) {
-    int n = matrizA.size();
-  
-    // Inicializar matrizL como uma matriz identidade e matrizU como uma cópia de matrizA
-    matrizL = vector<vector<double>>(n, vector<double>(n, 0.0));
-    matrizU = matrizA;
-  
-    for (int i = 0; i < n; i++) {
-        matrizL[i][i] = 1.0; // Elementos diagonais de L são 1
-        for (int j = i + 1; j < n; j++) {
-            double multiplicador = matrizU[j][i] / matrizU[i][i];
-            matrizL[j][i] = multiplicador;
-            for (int k = i; k < n; k++) {
-                matrizU[j][k] -= multiplicador * matrizU[i][k];
-            }
-        }
-    }
-    return matrizL;
+   int n = matrizA.size();
+
+
+   // Inicializar matrizL como uma matriz identidade e matrizU como uma cópia de matrizA
+   matrizL = vector<vector<double>>(n, vector<double>(n, 0.0));
+   matrizU = matrizA;
+
+
+   for (int i = 0; i < n; i++) {
+       matrizL[i][i] = 1.0; // Elementos diagonais de L são 1
+       for (int j = i + 1; j < n; j++) {
+           double multiplicador = matrizU[j][i] / matrizU[i][i];
+           matrizL[j][i] = multiplicador;
+           for (int k = i; k < n; k++) {
+               matrizU[j][k] -= multiplicador * matrizU[i][k];
+           }
+       }
+   }
+   return matrizL;
 }
+
 
 vector<double> fatoracaoLDP(vector<vector<double>> &matrizA, vector<double> vetorF) {
-  int n = matrizA.size();
+   int n = matrizA.size();
 
-  vector<vector<double>> matrizU;
-  
-  vector<vector<double>> matrizP = gerarMatrizP(matrizA);
 
-  vector<vector<double>> matrizD = gerarMatrizD(matrizA);
+   vector<vector<double>> matrizU;
 
-  imprimirMatriz(matrizP);
-  
-  vector<vector<double>> matrizL;
-  vector<vector<double>> matrizL2;
-  
-  matrizL = gerarL(matrizA, matrizL2, matrizU, vetorF);
-  
 
-  vector<double> y(n);
-  vector<double> z(n);
-  vector<double> d(n);
-  
-  y = resolverSistema(matrizL, vetorF);
-  
-  z = resolverSistema(matrizD, y);
-  
-  d = resolverSistema(matrizP, z);
-  
-  return d;
+   vector<vector<double>> matrizP = gerarMatrizP(matrizA);
+
+
+   vector<vector<double>> matrizD = gerarMatrizD(matrizA);
+ cout<<"Matriz P:"<<endl;
+   imprimirMatriz(matrizP);
+
+
+   vector<vector<double>> matrizL;
+   cout<<"Matriz D:"<<endl;
+   imprimirMatriz(matrizD);
+
+
+   vector<vector<double>> matrizL2;
+
+
+   matrizL = gerarL(matrizA, matrizL2, matrizU, vetorF);
+   cout<<"Matriz L:"<<endl<<endl;
+   imprimirMatriz(matrizL);
+
+
+   vector<double> y(n);
+   vector<double> z(n);
+   vector<double> d(n);
+
+
+   y = resolverSistema(matrizL, vetorF);
+
+
+   z = resolverSistema(matrizD, y);
+
+
+   d = resolverSistema(matrizP, z);
+
+
+   return d;
 }
+
+
+
+
 
 
 
@@ -98,16 +126,23 @@ vector<double> fatoracaoLDP(vector<vector<double>> &matrizA, vector<double> veto
 // }
 
 
+
+
 // vector<double> fatoracaoLDP(int n, double matrizAU[][3], double *f){
-  
+
+
 //   double matrizL[n][n];
 //   double matrizD[3][3] = {{1, 0, 0}, {0, 1, 0}, {0,0,1}};
-  
+
+
 //   geradorDeLU();
 
 
-  
-  // for(int k=0 ; k<3 ; k++) {
-  //   for(int i=0 ; i<3 ; i++) {
-  //     matrizD[k][i] = matrizD[k][i] * matrizAU[k][i];
+
+
+
+
+// for(int k=0 ; k<3 ; k++) {
+//   for(int i=0 ; i<3 ; i++) {
+//     matrizD[k][i] = matrizD[k][i] * matrizAU[k][i];
 // }
