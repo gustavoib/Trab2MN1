@@ -29,20 +29,5 @@ void imprimirVetor(const vector<double> &vetor);
 void Teste_quebra(const vector<double> &vetor);
 
 
-// void fatoracaoLDP(int n, double matrizU[][3], double matrizL[][3], double *f);
-
-
-//vector<double> resolucaoAxb(int n, vector<vector<double>> matriz, vector<double> &b);
-
-
-// vector<double> substituicoesRetroativas(double matriz[][3], double *b, int n);
-
-
-// void geradorDeLU(int n, double matriz[][3], double matrizL[][3]);
-
-
-// void printaMatriz(double matriz[][3]);
-
-
 #endif //TRAB2MN1_AUXILIARES_H
 

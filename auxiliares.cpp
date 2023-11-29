@@ -16,7 +16,7 @@ void imprimirMatriz(const vector<vector<double>> &matriz) {
        }
        cout<< "\n|| ";
        for (int j = 0; j < colunas; j++) {
-           cout<<setw(5)<<setprecision(3) << matriz[i][j] ;
+           cout<<setw(5)<<setprecision(5) << matriz[i][j] ;
            if (j!= colunas-1)
            cout<< "   ||  ";
        }
@@ -84,8 +84,6 @@ vector<vector<double>> escalonarMatriz(const vector<vector<double>>& matriz) {
            }
        }
    }
-
-
    return matrizEscalonada;
 }
 
@@ -197,157 +195,5 @@ vector<double> resolverSistema(const vector<vector<double>> &matrizA, const vect
        solucao[i] /= matrizA[i][i];
    }
 
-
    return solucao;
 }
-
-
-// vector<double> substituicoesRetroativas(const vector<vector<double>>& matriz,
-// const vector<double>& vetorB) {
-
-
-//   int n = vetorB.size();
-//   vector<double> vetorResposta(n);
-
-
-//   vetorResposta[n-1] = vetorB[n-1] / matriz[n-1][n-1];
-
-
-//   for (int i = n-2; i >= 0; i--) {
-//     double soma = 0;
-//     for (int j = i+1; j < n; j++) {
-//       soma += matriz[i][j] * vetorResposta[j];
-//     }
-//     vetorResposta[i] = (vetorB[i] - soma) / matriz[i][i];
-//   }
-//   return vetorResposta;
-// }
-
-
-// vector<double> resolucaoAxb(const vector<vector<double>> matriz, const
-// vector<double> &b) {
-//   int n = b.size();
-
-
-//   for(int k = 0; k < n; k++) {
-//     for(int i = k+1; i < n; i++) {
-//       double m = -matriz[i][k] / matriz[k][k];
-//       matriz[i][k] = 0;
-//       for(int j = k+1; j <= n; j++) {
-//         matriz[i][j] = matriz[i][j] + m * matriz[k][j];
-//       }
-//       b[i] = b[i] + m * b[k];
-//     }
-//   }
-//   return resolverSistema(matriz, b);
-// }
-
-
-// void printaMatriz(double matriz[][3], int n) {
-//     for (int i = 0; i < n; i++) {
-//         for (int j = 0; j < n; j++) {
-//             cout << "|" << matriz[i][j] << "|\t"; // Usando \t para separar
-//             os elementos
-//         }
-//         cout << endl; // Nova linha após cada linha da matriz
-
-
-//         // Adicionando uma linha horizontal após cada linha da matriz
-//         for (int k = 0; k < n; k++) {
-//             cout << "--------";
-//         }
-//         cout << endl;
-//     }
-//     cout << endl; // Linha em branco após a matriz
-// }
-
-
-// void geradorDeLU(int n, double matrizU[][3], double matrizL[][3]) {
-//   for(int k = 0; k < n; k++) {
-//     for(int i = k+1; i < n; i++) {
-//       double m = -matrizU[i][k] / matrizU[k][k];
-//       matrizU[i][k] = 0;
-//       for(int j = k+1; j <= n; j++) {
-//         matrizU[i][j] = matrizU[i][j] + m * matrizU[k][j];
-//       }
-//       matrizL[i][k] = -m;
-//     }
-//   }
-//   cout << "matriz U: \n";
-//   printaMatriz(matrizU, n);
-
-
-//   cout << "matriz L: \n";
-//   printaMatriz(matrizL, n);
-// }
-
-
-// void fatoracaoLDP(int n, double matrizU[][3], double matrizL[][3], double *f)
-// {
-
-
-//   geradorDeLU(n, matrizU, matrizL);
-
-
-//   // definição matriz D
-//   double matrizD[3][3] = {
-//               {0, 0, 0},
-//               {0, 0, 0},
-//               {0, 0, 0}
-//   };
-
-
-//   for(int i = 0; i < n; i++) {
-//     for(int j = 0; j < n; j++) {
-//       if (i == j) {
-//         matrizD[i][j] = matrizU[i][j];
-//       }
-//     }
-//   }
-
-
-//   // montagem da matriz P
-//   double matrizP[3][3] = {
-//               {1, 0, 0},
-//               {0, 1, 0},
-//               {0, 0, 1}
-//   };
-
-
-//   for(int i = 0; i < n; i++) {
-//     for(int j = 0; j < n; j++) {
-//       if (i == 0 && j == 1) {
-//         matrizP[i][j] = matrizU[i][j];
-//       }
-//       if (i == 0 && j == 2) {
-//         matrizP[i][j] = matrizU[i][j];
-//       }
-//       if (i == 1 && j == 2) {
-//         matrizP[i][j] = matrizU[i][j];
-//       }
-//     }
-//   }
-
-
-//   vector<double> y(n);
-//   vector<double> z(n);
-//   vector<double> d(n);
-
-
-//   y = resolucaoAxb(n, matrizL, f);
-//   z = resolucaoAxb(n, matrizD, y.data());
-//   d = resolucaoAxb(n, matrizP, z.data());
-
-
-//   cout << "matriz D: \n";
-//   printaMatriz(matrizD, n);
-
-
-//   cout << "matriz P: \n";
-//   printaMatriz(matrizP, n);
-
-
-//   for(int i = 0; i < n; i++){
-//     cout << d[i] << "\n";
-//   }
-// }
