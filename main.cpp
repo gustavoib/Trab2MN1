@@ -2,26 +2,44 @@
 #include "metodos.h"
 #include <vector>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
-void inputUser() {
-    int n = 0;
-    cout << "Digite a ordem n da matriz quadrada com n maior ou igual a dois :" << endl;
-    while (n < 2) {
-        cin >> n;
-        if (n < 2)
-            cout << "Valor inválido." << endl;
-    }
+// Função para mostrar um quadro comparativo dos resultados  de cada método pra n matrizes
+void itemD() {
 
-    cout << "Agora digite os valores da matriz:" << endl;
+    int num = 0;
+    cout << "Digite o número de variações desejado: ";
+    cin >> num;
 
-    vector<vector<double>> matrix(n, vector<double>(n, 0.0));
+    // Inicialização de vetores utilizados
+    vector<vector<vector<double>>> variacoesA(num, vector<vector<double>>(3, vector<double>(3, 0.0)));
+    vector<vector<double>> variacoesF(num, vector<double>(3, 0.0));
+    vector<vector<double>> resultadosLU(num, vector<double>(3, 0.0));
+    vector<vector<double>> resultadosLDP(num, vector<double>(3, 0.0));
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << "Elemento a" << i << j << ": ";
-            cin >> matrix[i][j];
+    // Recebimento das matrizes e dos F's
+    for (int i = 0; i < num; i++) {
+        cout << "Agora digite os valores da matriz " << i + 1 << ": " <<endl;
+
+        for (int j = 0; j < 3; j++) {
+            for (int k = 0; k < 3; k++) {
+                cout << "Elemento a" << j+1 << k+1 << ": ";
+                cin >> variacoesA[i][j][k];
+
+                if (cin.fail()) {
+                    cout << "Entrada Inválida." << endl;
+                    return;
+                }
+            }
+        }
+
+        cout << "Agora digite os valores do vetor F referente a ela: " << endl;
+
+        for (int j = 0; j < 3; j++) {
+            cout << "Elemento f[" << j << "]: ";
+            cin >> variacoesF[i][j];
 
             if (cin.fail()) {
                 cout << "Entrada Inválida." << endl;
@@ -30,7 +48,52 @@ void inputUser() {
         }
     }
 
-    imprimirMatriz(matrix);
+    // Cálculo dos resultados de cada método
+    for (int i = 0; i < num; i++) {
+        vector<vector<double>> matrizL, matrizU;
+        resultadosLU[i] = fatoracaoLU(variacoesA[i], matrizL, matrizU, variacoesF[i]);
+        resultadosLDP[i] = fatoracaoLDP(variacoesA[i], variacoesF[i]);
+
+    }
+
+    // Exibição dos resultados
+    cout << endl << "=-=-=-=-=-=-=-=-=-=-=-=-=- Quadro comparativo das matrizes =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+    int linhas = resultadosLU.size();
+    int colunas = resultadosLU[0].size();
+
+    cout << endl << "Pela fatoração LU:" << endl;
+    for (int i = 0; i < linhas; i++) {
+        exibirLinhas(linhas);
+        cout << endl;
+        cout << "||     Resultados da matriz " << i + 1 << "     ||" << endl;
+        exibirLinhas(linhas);
+        cout<< "\n|| ";
+        for (int j = 0; j < colunas; j++) {
+            cout<<setw(5)<<setprecision(5) << resultadosLU[i][j];
+            if (j!= colunas-1)
+                cout<< "   ||  ";
+        }
+        cout <<"   ||"<< endl;
+    }
+    exibirLinhas(linhas);
+    cout << endl;
+
+    cout << endl << "Pela fatoração LDP:" << endl;
+    for (int i = 0; i < linhas; i++) {
+        exibirLinhas(linhas);
+        cout << endl;
+        cout << "||     Resultados da matriz " << i + 1 << "     ||" << endl;
+        exibirLinhas(linhas);
+        cout<< "\n|| ";
+        for (int j = 0; j < colunas; j++) {
+            cout<<setw(5)<<setprecision(5) << resultadosLDP[i][j];
+            if (j!= colunas-1)
+                cout<< "   ||  ";
+        }
+        cout <<"   ||"<< endl;
+    }
+    exibirLinhas(linhas);
+    cout << endl;
 }
 
 void itemC() {
@@ -48,7 +111,7 @@ void itemC() {
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            cout << "Elemento a" << i << j << ": ";
+            cout << "Elemento a" << i+1 << j+1 << ": ";
             cin >> matriz[i][j];
 
             if (cin.fail()) {
@@ -90,7 +153,6 @@ void itemC() {
 
     cout << "Resultado da fatoração LPD com os dados inseridos: " << endl;
     vector<double> LDP =    fatoracaoLDP(matriz, F);
-
 
     imprimirVetor(LDP);
     Teste_quebra(LDP);
@@ -156,7 +218,7 @@ void menu() {
        }
 
        else if (item== 'd'){
-           inputUser();
+           itemD();
        }
 
    } while (item != 's');

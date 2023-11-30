@@ -197,3 +197,9 @@ vector<double> resolverSistema(const vector<vector<double>> &matrizA, const vect
 
    return solucao;
 }
+
+void exibirLinhas(int tamanho) {
+    for (int z = 0 ; z <= tamanho + 1 ; z++) {
+        cout<<"++--------++";
+    }
+}

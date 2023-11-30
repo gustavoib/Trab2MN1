@@ -29,5 +29,8 @@ void imprimirVetor(const vector<double> &vetor);
 void Teste_quebra(const vector<double> &vetor);
 
 
+void exibirLinhas(int tamanho);
+
+
 #endif //TRAB2MN1_AUXILIARES_H
 
