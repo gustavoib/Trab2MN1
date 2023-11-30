@@ -10,7 +10,7 @@ using namespace std;
 void itemD() {
 
     int num = 0;
-    cout << "Digite o número de variações desejado: ";
+    cout << "Digite o numero de variacoes desejado: ";
     cin >> num;
 
     // Inicialização de vetores utilizados
@@ -29,7 +29,7 @@ void itemD() {
                 cin >> variacoesA[i][j][k];
 
                 if (cin.fail()) {
-                    cout << "Entrada Inválida." << endl;
+                    cout << "Entrada Invalida." << endl;
                     return;
                 }
             }
@@ -42,7 +42,7 @@ void itemD() {
             cin >> variacoesF[i][j];
 
             if (cin.fail()) {
-                cout << "Entrada Inválida." << endl;
+                cout << "Entrada Invalida." << endl;
                 return;
             }
         }
@@ -61,7 +61,7 @@ void itemD() {
     int linhas = resultadosLU.size();
     int colunas = resultadosLU[0].size();
 
-    cout << endl << "Pela fatoração LU:" << endl;
+    cout << endl << "Pela fatoracao LU:" << endl;
     for (int i = 0; i < linhas; i++) {
         exibirLinhas(linhas);
         cout << endl;
@@ -78,7 +78,7 @@ void itemD() {
     exibirLinhas(linhas);
     cout << endl;
 
-    cout << endl << "Pela fatoração LDP:" << endl;
+    cout << endl << "Pela fatoracao LDP:" << endl;
     for (int i = 0; i < linhas; i++) {
         exibirLinhas(linhas);
         cout << endl;
@@ -104,7 +104,7 @@ void itemC() {
     while (n < 2) {
         cin >> n;
         if (n < 2)
-            cout << "Valor inválido." << endl;
+            cout << "Valor invalido." << endl;
     }
 
     // Recebimento dos valores da matriz
@@ -118,7 +118,7 @@ void itemC() {
             cin >> matriz[i][j];
 
             if (cin.fail()) {
-                cout << "Entrada Inválida." << endl;
+                cout << "Entrada Invalida." << endl;
                 return;
             }
         }
@@ -134,31 +134,46 @@ void itemC() {
         cin >> F[i];
 
         if (cin.fail()) {
-            cout << "Entrada Inválida." << endl;
+            cout << "Entrada Invalida." << endl;
             return;
         }
     }
 
     // Cálculo dos resultados de cada método
-    vector<vector<double>> matrizL, matrizU;
+    vector<vector<double>> matrizL, matrizU, aux1, aux2;
 
-    cout << "Resultado da fatoração LU com os dados inseridos: " << endl;
+    // Exibindo resultados da Fatoração LU
+    cout << "Resultado da fatoracao LU com os dados inseridos: " << endl;
     vector<double> solucaoLU = fatoracaoLU(matriz, matrizL, matrizU, F);
+
+    // Exibição das matrizes L e U
     cout << "Matriz L:" << endl;
     imprimirMatriz(matrizL);
-
 
     cout << "Matriz U:" << endl;
     imprimirMatriz(matrizU);
 
-
+    // Exibição dos Resultados
     cout << "Solucao do sistema LU:" << endl;
     imprimirVetor(solucaoLU);
     Teste_quebra(solucaoLU);
 
-    cout << "Resultado da fatoração LPD com os dados inseridos: " << endl;
+    // Exibindo resultados da Fatoração LDP
+    cout << "Resultado da fatoracao LPD com os dados inseridos: " << endl;
     vector<double> LDP =    fatoracaoLDP(matriz, F);
 
+    //Exibição das matrizes L, D e P
+    cout << "Matriz L:" << endl;
+    imprimirMatriz(gerarL(matriz, aux1, aux2, F));
+
+    cout << "Matriz D:" << endl;
+    imprimirMatriz(gerarMatrizD(matriz));
+
+    cout << "Matriz P:" << endl;
+    imprimirMatriz(gerarMatrizP(matriz));
+
+    // Exibição dos Resultados
+    cout << "Solucao do sistema LDP:" << endl;
     imprimirVetor(LDP);
     Teste_quebra(LDP);
 }

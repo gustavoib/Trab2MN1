@@ -11,4 +11,6 @@ vector<double> fatoracaoLU(const vector<vector<double>>& matrizA, vector<vector<
 
 vector<double> fatoracaoLDP(vector<vector<double>>& matrizA, vector<double> vetorB);
 
+vector<vector<double>> gerarL(vector<vector<double>> &matrizA, vector<vector<double>> &matrizL, vector<vector<double>> &matrizU, vector<double> vetorB);
+
 #endif //TRAB2MN1_METODOS_H

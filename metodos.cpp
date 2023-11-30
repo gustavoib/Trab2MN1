@@ -65,23 +65,15 @@ vector<double> fatoracaoLDP(vector<vector<double>> &matrizA, vector<double> veto
 
    vector<vector<double>> matrizU;
 
-
    vector<vector<double>> matrizP = gerarMatrizP(matrizA);
 
-
    vector<vector<double>> matrizD = gerarMatrizD(matrizA);
-   cout<<"Matriz P:"<<endl;
-
 
    vector<vector<double>> matrizL;
-   cout<<"Matriz D:"<<endl;
-
 
    vector<vector<double>> matrizL2;
 
-
    matrizL = gerarL(matrizA, matrizL2, matrizU, vetorF);
-   cout<<"Matriz L:"<<endl<<endl;
 
 
    vector<double> y(n);
