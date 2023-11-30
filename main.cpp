@@ -96,7 +96,9 @@ void itemD() {
     cout << endl;
 }
 
+// Função para retornar o resultado de cada método para uma matriz de tamanho n e um vetor F de tamanho n
 void itemC() {
+    // Recebimento do valor de n
     int n = 0;
     cout << "Digite a ordem n da matriz quadrada com n maior ou igual a dois :" << endl;
     while (n < 2) {
@@ -105,6 +107,7 @@ void itemC() {
             cout << "Valor inválido." << endl;
     }
 
+    // Recebimento dos valores da matriz
     cout << "Agora digite os valores da matriz: " << endl;
 
     vector<vector<double>> matriz(n, vector<double>(n, 0.0));
@@ -121,6 +124,7 @@ void itemC() {
         }
     }
 
+    // Recebimento dos valores do vetor F
     cout << "Agora digite os valores do vetor F: " << endl;
 
     vector<double> F(n, 0.0);
@@ -135,6 +139,7 @@ void itemC() {
         }
     }
 
+    // Cálculo dos resultados de cada método
     vector<vector<double>> matrizL, matrizU;
 
     cout << "Resultado da fatoração LU com os dados inseridos: " << endl;
