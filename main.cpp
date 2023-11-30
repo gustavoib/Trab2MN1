@@ -20,6 +20,7 @@ void inputUser() {
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
+            cout << "Elemento a" << i << j << ": ";
             cin >> matrix[i][j];
 
             if (cin.fail()) {
@@ -30,6 +31,69 @@ void inputUser() {
     }
 
     imprimirMatriz(matrix);
+}
+
+void itemC() {
+    int n = 0;
+    cout << "Digite a ordem n da matriz quadrada com n maior ou igual a dois :" << endl;
+    while (n < 2) {
+        cin >> n;
+        if (n < 2)
+            cout << "Valor inválido." << endl;
+    }
+
+    cout << "Agora digite os valores da matriz: " << endl;
+
+    vector<vector<double>> matriz(n, vector<double>(n, 0.0));
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << "Elemento a" << i << j << ": ";
+            cin >> matriz[i][j];
+
+            if (cin.fail()) {
+                cout << "Entrada Inválida." << endl;
+                return;
+            }
+        }
+    }
+
+    cout << "Agora digite os valores do vetor F: " << endl;
+
+    vector<double> F(n, 0.0);
+
+    for (int i = 0; i < n; i++) {
+        cout << "Elemento f[" << i << "]: ";
+        cin >> F[i];
+
+        if (cin.fail()) {
+            cout << "Entrada Inválida." << endl;
+            return;
+        }
+    }
+
+    vector<vector<double>> matrizL, matrizU;
+
+    cout << "Resultado da fatoração LU com os dados inseridos: " << endl;
+    vector<double> solucaoLU = fatoracaoLU(matriz, matrizL, matrizU, F);
+    cout << "Matriz L:" << endl;
+    imprimirMatriz(matrizL);
+
+
+    cout << "Matriz U:" << endl;
+    imprimirMatriz(matrizU);
+
+
+    cout << "Solucao do sistema LU:" << endl;
+    imprimirVetor(solucaoLU);
+    Teste_quebra(solucaoLU);
+
+    cout << "Resultado da fatoração LPD com os dados inseridos: " << endl;
+    vector<double> LDP =    fatoracaoLDP(matriz, F);
+
+
+    imprimirVetor(LDP);
+    Teste_quebra(LDP);
 }
 
 void menu() {
@@ -59,7 +123,7 @@ void menu() {
             << "[d] Escolher valores para a matriz n X n com n > 1" <<endl
             << "[s] Sair" << endl;
        cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
-
+       cout << "Item escolhido: ";
        cin >> item;
        vector<vector<double>> matrizL, matrizU;
 
@@ -88,8 +152,7 @@ void menu() {
            Teste_quebra(LDP);
        }
        else if (item == 'c') {
-
-
+            itemC();
        }
 
        else if (item== 'd'){
