@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+
 using namespace std;
 
 
@@ -8,7 +9,6 @@ using namespace std;
 void imprimirMatriz(const vector<vector<double>> &matriz) {
    int linhas = matriz.size();
    int colunas = matriz[0].size();
-
 
    for (int i = 0; i < linhas; i++) {
        for (int z = 0 ; z< linhas; z++) {
@@ -28,7 +28,6 @@ void imprimirMatriz(const vector<vector<double>> &matriz) {
    cout << endl;
 }
 
-
 // Função para imprimir vetor
 void imprimirVetor(const vector<double> &vetor) {
    int tamanho = vetor.size();
@@ -40,15 +39,11 @@ void imprimirVetor(const vector<double> &vetor) {
    }
    cout<<" ]"<<endl;
    cout << endl;
-
-
 }
-
 
 // Função para avaliar se o deslocamentos das partes excede o limite:
 void Teste_quebra(const vector<double> &vetor){
    int tamanho = vetor.size();
-
 
    for (int i = 0; i < tamanho; i++) {
        if(abs(vetor[i]) >2)
@@ -56,25 +51,18 @@ void Teste_quebra(const vector<double> &vetor){
        else
            printf("d%d nao ira quebrar.\n", i+1) ;
    }
-
-
    cout << endl;
-
-
 }
 
-
-// Função para escalonar a matriz sem garantir que o pivô seja 1
+// Função para escalonar a matriz
 vector<vector<double>> escalonarMatriz(const vector<vector<double>>& matriz) {
    vector<vector<double>> matrizEscalonada = matriz;
    int linhas = matrizEscalonada.size();
    int colunas = matrizEscalonada[0].size();
 
-
    for (int i = 0; i < linhas; i++) {
-       // Encontrar o pivô (o primeiro elemento não nulo na linha
+       // Encontrar o pivô (o primeiro elemento não nulo na linha)
        double pivo = matrizEscalonada[i][i];
-
 
        // Subtrair múltiplos da linha atual de outras linhas para zerar elementos abaixo do pivô
        for (int k = i + 1; k < linhas; k++) {
@@ -87,16 +75,34 @@ vector<vector<double>> escalonarMatriz(const vector<vector<double>>& matriz) {
    return matrizEscalonada;
 }
 
+// Função para gerar a matriz L individualmente
+vector<vector<double>> gerarL(vector<vector<double>> &matrizA, vector<vector<double>> &matrizL, vector<vector<double>> &matrizU, vector<double> vetorB) {
+    int n = matrizA.size();
 
-// Função para realizar o escalonamento da matriz
+    // Inicializar matrizL como uma matriz identidade e matrizU como uma cópia de matrizA
+    matrizL = vector<vector<double>>(n, vector<double>(n, 0.0));
+    matrizU = matrizA;
+
+    for (int i = 0; i < n; i++) {
+        matrizL[i][i] = 1.0; // Elementos diagonais de L são 1
+        for (int j = i + 1; j < n; j++) {
+            double multiplicador = matrizU[j][i] / matrizU[i][i];
+            matrizL[j][i] = multiplicador;
+            for (int k = i; k < n; k++) {
+                matrizU[j][k] -= multiplicador * matrizU[i][k];
+            }
+        }
+    }
+    return matrizL;
+}
+
+// Função para gerar a matriz P individualmente
 vector<vector<double>> gerarMatrizP(const vector<vector<double>> &matriz) {
    int linhas = matriz.size();
    int colunas = matriz[0].size();
 
-
    // Criar uma cópia da matriz original
    vector<vector<double>> matrizP = matriz;
-
 
    for (int i = 0; i < linhas; i++) {
        // Normalizando a linha atual
@@ -104,7 +110,6 @@ vector<vector<double>> gerarMatrizP(const vector<vector<double>> &matriz) {
        for (int j = i; j < colunas; j++) {
            matrizP[i][j] /= divisor;
        }
-
 
        // Subtraindo a linha atual das linhas abaixo para zerar os elementos abaixo do pivô
        for (int k = i + 1; k < linhas; k++) {
@@ -114,21 +119,17 @@ vector<vector<double>> gerarMatrizP(const vector<vector<double>> &matriz) {
            }
        }
    }
-
-
    return matrizP;
 }
 
-
+// Função gerar a matriz D individualmente
 vector<vector<double>> gerarMatrizD (const vector<vector<double>> &matriz) {
    int n = matriz.size();
    vector<vector<double>> matrizD;
    vector<vector<double>> matrizEscalonada;
    matrizD = vector<vector<double>>(n, vector<double>(n, 0.0));
 
-
    matrizEscalonada = escalonarMatriz(matriz);
-
 
    for (int i = 0; i < n; i++) {
        for (int j = 0; j < n; j++) {
@@ -140,11 +141,9 @@ vector<vector<double>> gerarMatrizD (const vector<vector<double>> &matriz) {
    return matrizD;
 }
 
-
 // Função para realizar o escalonamento da matriz e resolver o sistema Ax = b
 vector<double> resolverSistema(vector<vector<double>> matrizA, vector<double> vetorB) {
    int n = matrizA.size();
-
 
    for (int i = 0; i < n; i++) {
        // Normalizando a linha atual
@@ -153,7 +152,6 @@ vector<double> resolverSistema(vector<vector<double>> matrizA, vector<double> ve
            matrizA[i][j] /= divisor;
        }
        vetorB[i] /= divisor;
-
 
        // Subtraindo a linha atual das linhas abaixo para zerar os elementos abaixo do pivô
        for (int k = i + 1; k < n; k++) {
@@ -165,7 +163,6 @@ vector<double> resolverSistema(vector<vector<double>> matrizA, vector<double> ve
        }
    }
 
-
    // Substituição retroativa
    vector<double> solucao(n, 0.0);
    for (int i = n - 1; i >= 0; i--) {
@@ -174,30 +171,10 @@ vector<double> resolverSistema(vector<vector<double>> matrizA, vector<double> ve
            solucao[i] -= matrizA[i][j] * solucao[j];
        }
    }
-
-
    return solucao;
 }
 
-
-// Função para realizar a substituição retroativa e encontrar a solução do sistema Ax = b
-vector<double> resolverSistema(const vector<vector<double>> &matrizA, const vector<double>& vetorB) {
-   int n = matrizA.size();
-   vector<double> solucao(n, 0.0);
-
-
-   // Substituição retroativa
-   for (int i = n - 1; i >= 0; i--) {
-       solucao[i] = vetorB[i];
-       for (int j = i + 1; j < n; j++) {
-           solucao[i] -= matrizA[i][j] * solucao[j];
-       }
-       solucao[i] /= matrizA[i][i];
-   }
-
-   return solucao;
-}
-
+// Função para exibir linhas
 void exibirLinhas(int tamanho) {
     for (int z = 0 ; z <= tamanho + 1 ; z++) {
         cout<<"++--------++";
